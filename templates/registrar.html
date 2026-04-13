@@ -390,30 +390,34 @@
       font-weight: 600;
       text-align: center;
     }
-    .ok-inline {
+    .ok-slot {
+      position: relative;
+      height: 1.25rem;
       margin: 0 0 0.45rem;
+      overflow: hidden;
+    }
+    .ok-inline {
+      position: absolute;
+      inset: 0;
+      margin: 0;
       text-align: center;
       font-size: 0.86rem;
       font-weight: 600;
       color: #86efac;
       letter-spacing: 0.01em;
       text-shadow: 0 0 10px rgba(34, 197, 94, 0.22);
-      animation: okFadeIn 340ms ease-out;
-      transition: opacity 0.36s ease, transform 0.36s ease;
+      opacity: 0;
+      transform: translateY(-3px);
+      pointer-events: none;
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+    .ok-inline.is-show {
+      opacity: 1;
+      transform: translateY(0);
     }
     .ok-inline.is-hide {
       opacity: 0;
-      transform: translateY(-4px);
-    }
-    @keyframes okFadeIn {
-      0% {
-        opacity: 0;
-        transform: translateY(-5px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      transform: translateY(-3px);
     }
   </style>
 </head>
@@ -441,9 +445,11 @@
     </div>
   </div>
   <div class="wrap">
-    {% if enviado_ok %}
-    <p class="ok-inline">Formulario enviado</p>
-    {% endif %}
+    <div class="ok-slot" aria-live="polite">
+      {% if enviado_ok %}
+      <p class="ok-inline is-show">Formulario enviado</p>
+      {% endif %}
+    </div>
     <h1 id="i18n-h1" data-h1-mode="{% if edit_id %}edit{% else %}new{% endif %}">{% if edit_id %}Editar jugador{% else %}Completa el formulario{% endif %}</h1>
 
     <div class="card">
@@ -919,9 +925,6 @@
       if (okMsg) {
         setTimeout(function () {
           okMsg.classList.add("is-hide");
-          setTimeout(function () {
-            if (okMsg && okMsg.parentNode) okMsg.parentNode.removeChild(okMsg);
-          }, 380);
         }, 2600);
       }
     })();
