@@ -313,12 +313,17 @@ def servir_fondo_listado_jugadores():
     return FileResponse(ruta, media_type="image/png")
 
 
-@app.get("/", response_class=HTMLResponse)
-def portada(request: Request):
-    return templates.TemplateResponse(
-        "index.html",
-        {"request": request},
-    )
+@app.get("/")
+def portada():
+    """La portada redirige al formulario: a los usuarios solo les hace falta /registrar."""
+    return RedirectResponse(url="/registrar", status_code=303)
+
+
+@app.get("/admin", include_in_schema=False)
+@app.get("/admin/", include_in_schema=False)
+def admin_alias_listado():
+    """Compatibilidad: /admin redirige al listado (sin login)."""
+    return RedirectResponse(url="/jugadores", status_code=303)
 
 
 def _ctx_listado_jugadores(db: Session) -> dict:
