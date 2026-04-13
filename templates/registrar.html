@@ -416,14 +416,11 @@
     </div>
   </div>
   <div class="wrap">
+    {% if volver_a_jugadores|default(false) %}
     <p>
-      <a
-        class="nav-salir"
-        id="nav-salir"
-        href="{% if volver_a_jugadores|default(false) %}/jugadores{% else %}/{% endif %}"
-        data-nav-mode="{% if volver_a_jugadores|default(false) %}back{% else %}exit{% endif %}"
-      >{% if volver_a_jugadores|default(false) %}Atrás{% else %}Salir{% endif %}</a>
+      <a class="nav-salir" id="nav-salir" href="/jugadores" data-nav-mode="back">Atrás</a>
     </p>
+    {% endif %}
     <h1 id="i18n-h1" data-h1-mode="{% if edit_id %}edit{% else %}new{% endif %}">{% if edit_id %}Editar jugador{% else %}Completa el formulario{% endif %}</h1>
 
     <div class="card">
