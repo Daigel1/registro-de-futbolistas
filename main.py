@@ -531,8 +531,11 @@ def crear_jugador(
 
 
 @app.get("/partidos/organizar", response_class=HTMLResponse)
-def organizar_partido(request: Request):
+def organizar_partido(request: Request, db: Session = Depends(get_db)):
     return templates.TemplateResponse(
         "organizar_partido.html",
-        {"request": request},
+        {
+            "request": request,
+            "jugadores": _jugadores_query_ordenados(db),
+        },
     )

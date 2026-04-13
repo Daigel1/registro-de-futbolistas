@@ -8,48 +8,324 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      background: linear-gradient(160deg, #0f172a 0%, #111827 45%, #0b1220 100%);
+      padding: 1rem;
+      font-family: "Segoe UI", Roboto, system-ui, sans-serif;
+      background:
+        radial-gradient(ellipse 120% 70% at 20% 0%, rgba(34, 211, 238, 0.12), transparent 55%),
+        radial-gradient(ellipse 120% 70% at 90% 100%, rgba(59, 130, 246, 0.12), transparent 55%),
+        linear-gradient(160deg, #060b17 0%, #0d1526 42%, #080f1d 100%);
       color: #e5e7eb;
     }
-    .card {
-      width: min(92vw, 32rem);
-      border-radius: 1rem;
-      border: 1px solid rgba(148, 163, 184, 0.25);
-      background: rgba(255, 255, 255, 0.06);
-      padding: 1.2rem 1rem;
-      text-align: center;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+    .wrap {
+      width: min(98vw, 78rem);
+      margin: 0 auto;
     }
-    h1 {
-      font-size: clamp(1.2rem, 4.2vw, 1.65rem);
-      margin-bottom: 0.5rem;
-      color: #f8fafc;
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.8rem;
     }
-    p {
-      color: #94a3b8;
-      font-size: 0.92rem;
-      line-height: 1.45;
-      margin-bottom: 1rem;
-    }
-    a {
+    .nav a {
       color: #93c5fd;
       text-decoration: none;
       font-weight: 600;
+      font-size: 0.85rem;
+    }
+    .title {
+      text-align: center;
+      margin-bottom: 0.9rem;
+    }
+    .title h1 {
+      font-size: clamp(1.2rem, 3.5vw, 1.85rem);
+      letter-spacing: 0.02em;
+      color: #f8fafc;
+      text-transform: uppercase;
+      margin-bottom: 0.2rem;
+    }
+    .title p {
+      color: #93a4bf;
+      font-size: 0.84rem;
+    }
+    .hud {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.7rem;
+      margin-bottom: 0.9rem;
+    }
+    .hud-card {
+      border-radius: 0.75rem;
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      background: rgba(15, 23, 42, 0.62);
+      padding: 0.62rem 0.72rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.06);
+    }
+    .hud-card strong {
+      font-size: 0.9rem;
+      color: #f1f5f9;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+    .hud-card span {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      font-weight: 600;
+    }
+    .panel {
+      border-radius: 0.95rem;
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      background: rgba(2, 6, 23, 0.48);
+      overflow: hidden;
+      box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.22),
+        inset 0 0 0 1px rgba(148, 163, 184, 0.06);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    thead th {
+      background: rgba(15, 23, 42, 0.85);
+      color: #bfdbfe;
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.55rem 0.45rem;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.22);
+    }
+    tbody td {
+      padding: 0.5rem 0.45rem;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+      font-size: 0.8rem;
+      text-align: center;
+      color: #dbe4f2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    tbody tr:hover {
+      background: rgba(30, 41, 59, 0.42);
+    }
+    td.col-nombre {
+      text-align: left;
+      font-weight: 600;
+      color: #f8fafc;
+      padding-left: 0.62rem;
+    }
+    .pill-pos {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 2.1rem;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.2rem 0.46rem;
+      border: 1px solid rgba(147, 197, 253, 0.38);
+      background: rgba(59, 130, 246, 0.2);
+      color: #bfdbfe;
+      letter-spacing: 0.02em;
+    }
+    .num-pref {
+      font-variant-numeric: tabular-nums;
+      font-weight: 700;
+      color: #fef08a;
+    }
+    .num-vacio {
+      color: #64748b;
+    }
+    .team-seg {
+      display: inline-flex;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(15, 23, 42, 0.8);
+    }
+    .team-seg button {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: #94a3b8;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      padding: 0.2rem 0.42rem;
+      min-width: 1.8rem;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .team-seg button.is-on {
+      color: #f8fafc;
+      background: rgba(34, 197, 94, 0.26);
+    }
+    .team-seg button[data-team="B"].is-on {
+      background: rgba(59, 130, 246, 0.28);
+    }
+    .badge-role {
+      font-size: 0.66rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: #cbd5e1;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      border-radius: 999px;
+      padding: 0.17rem 0.38rem;
+      background: rgba(15, 23, 42, 0.8);
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+    .badge-role.is-titular {
+      color: #111827;
+      border-color: rgba(250, 204, 21, 0.58);
+      background: rgba(250, 204, 21, 0.88);
+    }
+    .empty {
+      padding: 1.1rem;
+      text-align: center;
+      color: #94a3b8;
       font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
-  <main class="card">
-    <h1>Organizar partido</h1>
-    <p>Esta sección está lista para construir la lógica de convocatoria y alineaciones.</p>
-    <a href="/jugadores">Volver al portal de jugadores</a>
-  </main>
+  <div class="wrap">
+    <div class="nav">
+      <a href="/jugadores">← Portal jugadores</a>
+      <a href="/registrar">+ Registrar jugador</a>
+    </div>
+    <div class="title">
+      <h1>Organizar partido</h1>
+      <p>Estilo FIFA: marca equipo y rol de cada jugador para armar la alineación.</p>
+    </div>
+    <div class="hud">
+      <div class="hud-card">
+        <strong>Equipo A</strong>
+        <span><span id="a-tit">0</span> titulares · <span id="a-total">0</span> en plantilla</span>
+      </div>
+      <div class="hud-card">
+        <strong>Equipo B</strong>
+        <span><span id="b-tit">0</span> titulares · <span id="b-total">0</span> en plantilla</span>
+      </div>
+    </div>
+    <div class="panel">
+      {% if jugadores %}
+      <table aria-label="Listado de jugadores para organizar partido">
+        <thead>
+          <tr>
+            <th style="width: 32%">Jugador</th>
+            <th style="width: 16%">Posición</th>
+            <th style="width: 14%">Dorsal pref.</th>
+            <th style="width: 22%">Equipo</th>
+            <th style="width: 16%">Rol</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for j in jugadores %}
+          {% set pos = posicion_principal(j.posicion, j.posicion_favorita) %}
+          <tr class="row-player" data-player-id="{{ j.id }}">
+            <td class="col-nombre">{{ titulo_palabras(j.nombre) }} {{ titulo_palabras(j.apellido) }}</td>
+            <td>
+              <span class="pill-pos">
+                {% if pos == 'Portero' %}PO{% elif pos == 'Defensa' %}DF{% elif pos == 'Centrocampista' %}MD{% elif pos == 'Delantero' %}DL{% else %}—{% endif %}
+              </span>
+            </td>
+            <td>
+              {% if j.numero_camiseta is not none %}
+              <span class="num-pref">{{ j.numero_camiseta }}</span>
+              {% else %}
+              <span class="num-vacio">—</span>
+              {% endif %}
+            </td>
+            <td>
+              <div class="team-seg" role="group" aria-label="Equipo">
+                <button type="button" data-team="" class="is-on">—</button>
+                <button type="button" data-team="A">A</button>
+                <button type="button" data-team="B">B</button>
+              </div>
+            </td>
+            <td>
+              <button type="button" class="badge-role" data-role="sup">Suplente</button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <div class="empty">No hay jugadores registrados todavía. Añade algunos desde el formulario.</div>
+      {% endif %}
+    </div>
+  </div>
+  {% if jugadores %}
+  <script>
+    (function () {
+      function refreshHud() {
+        var aTotal = document.querySelectorAll("tr.row-player[data-team='A']").length;
+        var bTotal = document.querySelectorAll("tr.row-player[data-team='B']").length;
+        var aTit = document.querySelectorAll("tr.row-player[data-team='A'][data-role='tit']").length;
+        var bTit = document.querySelectorAll("tr.row-player[data-team='B'][data-role='tit']").length;
+        var aTotEl = document.getElementById("a-total");
+        var bTotEl = document.getElementById("b-total");
+        var aTitEl = document.getElementById("a-tit");
+        var bTitEl = document.getElementById("b-tit");
+        if (aTotEl) aTotEl.textContent = String(aTotal);
+        if (bTotEl) bTotEl.textContent = String(bTotal);
+        if (aTitEl) aTitEl.textContent = String(aTit);
+        if (bTitEl) bTitEl.textContent = String(bTit);
+      }
+
+      document.querySelectorAll("tr.row-player").forEach(function (tr) {
+        tr.setAttribute("data-team", "");
+        tr.setAttribute("data-role", "sup");
+      });
+
+      document.addEventListener("click", function (e) {
+        var teamBtn = e.target.closest(".team-seg button");
+        if (teamBtn) {
+          var tr = teamBtn.closest("tr.row-player");
+          if (!tr) return;
+          var team = teamBtn.getAttribute("data-team") || "";
+          tr.setAttribute("data-team", team);
+          if (!team) {
+            tr.setAttribute("data-role", "sup");
+            var roleBtn = tr.querySelector(".badge-role");
+            if (roleBtn) {
+              roleBtn.classList.remove("is-titular");
+              roleBtn.textContent = "Suplente";
+              roleBtn.setAttribute("data-role", "sup");
+            }
+          }
+          tr.querySelectorAll(".team-seg button").forEach(function (b) {
+            b.classList.toggle("is-on", b === teamBtn);
+          });
+          refreshHud();
+          return;
+        }
+
+        var roleBtn = e.target.closest(".badge-role");
+        if (roleBtn) {
+          var tr2 = roleBtn.closest("tr.row-player");
+          if (!tr2) return;
+          var teamNow = tr2.getAttribute("data-team") || "";
+          if (!teamNow) return;
+          var nowTit = tr2.getAttribute("data-role") === "tit";
+          tr2.setAttribute("data-role", nowTit ? "sup" : "tit");
+          roleBtn.classList.toggle("is-titular", !nowTit);
+          roleBtn.textContent = nowTit ? "Suplente" : "Titular";
+          roleBtn.setAttribute("data-role", nowTit ? "sup" : "tit");
+          refreshHud();
+        }
+      });
+
+      refreshHud();
+    })();
+  </script>
+  {% endif %}
 </body>
 </html>
