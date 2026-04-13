@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portada — Registro de jugadores</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Saira+Semi+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      font-family: "Saira Semi Condensed", system-ui, sans-serif;
+      color: #e8ecf4;
+      background:
+        linear-gradient(
+          165deg,
+          rgba(18, 24, 38, 0.72) 0%,
+          rgba(22, 32, 48, 0.58) 40%,
+          rgba(16, 26, 36, 0.82) 100%
+        ),
+        url("https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?auto=format&fit=crop&w=3840&q=90") center / cover no-repeat fixed;
+    }
+    .hero-inner {
+      max-width: 36rem;
+      padding: 2.25rem 2rem;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow:
+        0 24px 48px rgba(0, 0, 0, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+    .hero h1 {
+      font-family: "Chakra Petch", sans-serif;
+      font-weight: 600;
+      font-size: clamp(1.75rem, 5vw, 2.65rem);
+      letter-spacing: 0.04em;
+      line-height: 1.25;
+      color: #f4f7fb;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.35);
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-family: "Saira Semi Condensed", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #b8c5d4;
+      line-height: 1.55;
+      margin-bottom: 1.85rem;
+    }
+    .hero a {
+      display: inline-block;
+      font-family: "Chakra Petch", sans-serif;
+      padding: 0.85rem 1.85rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 999px;
+      color: #0f1419;
+      background: linear-gradient(180deg, #a8e6cf 0%, #7bc4a8 100%);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+    .hero a:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
+    }
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.1rem;
+      width: 100%;
+    }
+    .hero-actions a {
+      width: 100%;
+      max-width: 24rem;
+      text-align: center;
+      box-sizing: border-box;
+    }
+    .hero a.ver-jugadores {
+      font-family: "Chakra Petch", sans-serif;
+      padding: 0.85rem 1.85rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #0a0a0a;
+      background: linear-gradient(180deg, #7dd3fc 0%, #60a5fa 45%, #3b82f6 100%);
+      border: 1px solid rgba(191, 219, 254, 0.65);
+      box-shadow:
+        0 8px 28px rgba(0, 0, 0, 0.22),
+        0 0 36px rgba(96, 165, 250, 0.45);
+    }
+    .hero a.ver-jugadores:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+      background: linear-gradient(180deg, #bae6fd 0%, #7dd3fc 40%, #60a5fa 100%);
+      box-shadow:
+        0 12px 36px rgba(0, 0, 0, 0.26),
+        0 0 44px rgba(125, 211, 252, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <section class="hero" aria-label="Portada">
+    <div class="hero-inner">
+      <h1>Bienvenido a mi Web</h1>
+      <p>Registra jugadores de fútbol y lleva un control sencillo de tu plantilla.</p>
+      <div class="hero-actions">
+        <a href="/registrar">Ir al registro de jugadores</a>
+        <a class="ver-jugadores" href="/jugadores">Ver jugadores registrados</a>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

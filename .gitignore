@@ -1,0 +1,9 @@
+data/contactos_registrados.csv
+data/contactos_registrados.vcf
+.env
+**/client_secret*.json
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+jugadores.db

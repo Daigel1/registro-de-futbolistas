@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% if edit_id %}Editar jugador{% else %}Formulario{% endif %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Saira+Semi+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Saira Semi Condensed", system-ui, sans-serif;
+      font-weight: 500;
+      color: #e2e8f0;
+      padding: 1.5rem;
+      background-color: #121820;
+      background-image:
+        radial-gradient(ellipse 130% 100% at 50% 0%, rgba(120, 180, 168, 0.1), transparent 52%),
+        linear-gradient(
+          168deg,
+          rgba(14, 24, 36, 0.88) 0%,
+          rgba(12, 22, 34, 0.82) 45%,
+          rgba(8, 16, 26, 0.92) 100%
+        ),
+        url("https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=3840&q=90");
+      background-position: center, center, center;
+      background-size: cover, cover, cover;
+      background-repeat: no-repeat, no-repeat, no-repeat;
+      background-attachment: scroll, scroll, fixed;
+    }
+    a.nav-salir {
+      display: inline-block;
+      font-family: "Chakra Petch", sans-serif;
+      font-size: clamp(1.08rem, 2.4vw, 1.35rem);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.6rem 1.75rem;
+      color: #fecaca;
+      background: rgba(220, 38, 38, 0.14);
+      border: 1px solid rgba(248, 113, 113, 0.42);
+      border-radius: 999px;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+    a.nav-salir:hover {
+      color: #fef2f2;
+      border-color: rgba(252, 165, 165, 0.65);
+      background: rgba(220, 38, 38, 0.22);
+    }
+    .lang-fab {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.4rem;
+    }
+    button.btn-lang {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.85rem;
+      height: 2.85rem;
+      margin: 0;
+      padding: 0;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: #cbd5e1;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      letter-spacing: normal;
+      text-transform: none;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+    }
+    button.btn-lang:hover {
+      color: #f1f5f9;
+      border-color: rgba(168, 230, 207, 0.45);
+      background: rgba(15, 23, 42, 0.72);
+      transform: translateY(-1px);
+      filter: none;
+    }
+    button.btn-lang:focus-visible {
+      outline: 2px solid rgba(168, 230, 207, 0.55);
+      outline-offset: 2px;
+    }
+    button.btn-lang svg {
+      width: 1.35rem;
+      height: 1.35rem;
+      flex-shrink: 0;
+    }
+    .lang-menu {
+      display: none;
+      flex-direction: column;
+      gap: 0.15rem;
+      min-width: 10.5rem;
+      padding: 0.4rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(12, 18, 28, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+    }
+    .lang-fab.is-open .lang-menu {
+      display: flex;
+    }
+    button.lang-menu-item {
+      margin: 0;
+      padding: 0.55rem 0.75rem;
+      width: 100%;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: #e2e8f0;
+      font-family: "Saira Semi Condensed", sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-align: left;
+      text-transform: none;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      box-shadow: none;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    button.lang-menu-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+      filter: none;
+      transform: none;
+    }
+    button.lang-menu-item.is-active {
+      color: #a8e6cf;
+      background: rgba(111, 184, 154, 0.12);
+    }
+    .wrap { max-width: 720px; margin: 0 auto; padding-top: 0.5rem; }
+    .wrap > p:first-of-type {
+      margin: 0 0 0.65rem;
+      text-align: center;
+    }
+    h1 {
+      font-family: "Chakra Petch", sans-serif;
+      font-weight: 600;
+      font-size: clamp(0.68rem, 2.35vw, 1.12rem);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-align: center;
+      width: 100%;
+      margin: 2rem 0 1.25rem;
+      padding: 0 0.35rem;
+      box-sizing: border-box;
+      color: #eef2f6;
+      text-shadow: 0 1px 12px rgba(0, 0, 0, 0.25);
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.045);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+    label {
+      display: block;
+      font-size: clamp(0.92rem, 2.45vw, 1.08rem);
+      margin-bottom: 0.5rem;
+      color: #9fb0c4;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-align: center;
+      padding: 0 0.25rem;
+      box-sizing: border-box;
+      line-height: 1.15;
+      word-break: keep-all;
+      overflow-wrap: normal;
+    }
+    .card form > label:not(:first-of-type),
+    .card form > .field-label-pos {
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+      padding-top: 1rem;
+      margin-top: 0.2rem;
+    }
+    .field-label-pos {
+      display: block;
+      font-size: clamp(0.92rem, 2.45vw, 1.08rem);
+      margin-bottom: 0.5rem;
+      color: #9fb0c4;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-align: center;
+      padding: 0 0.25rem;
+      line-height: 1.15;
+    }
+    input, select {
+      width: 100%;
+      padding: 0.75rem 0.85rem;
+      margin-bottom: 1.05rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(10, 14, 20, 0.45);
+      color: #f1f5f9;
+      font-family: "Saira Semi Condensed", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-align: center;
+      text-align-last: center;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: rgba(142, 196, 176, 0.45);
+      box-shadow: 0 0 0 3px rgba(142, 196, 176, 0.12);
+    }
+    input::placeholder { color: #64748b; font-weight: 500; }
+    form > button[type="submit"] {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    button {
+      padding: 0.85rem 1.75rem;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #a8e6cf 0%, #6fb89a 100%);
+      color: #0f161c;
+      font-family: "Chakra Petch", sans-serif;
+      font-weight: 600;
+      font-size: clamp(0.65rem, 1.8vw, 0.76rem);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      transition: filter 0.2s ease, transform 0.2s ease;
+    }
+    button:hover {
+      filter: brightness(1.04);
+      transform: translateY(-1px);
+    }
+    details.pos-picker {
+      width: 100%;
+      margin-bottom: 1.05rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(10, 14, 20, 0.45);
+      overflow: hidden;
+    }
+    details.pos-picker summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 0.75rem 0.85rem;
+      font-family: "Saira Semi Condensed", sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      text-align: center;
+      color: #f1f5f9;
+      user-select: none;
+    }
+    details.pos-picker summary::-webkit-details-marker {
+      display: none;
+    }
+    details.pos-picker summary::after {
+      content: "▾";
+      display: inline-block;
+      margin-left: 0.85rem;
+      font-size: 1.22em;
+      line-height: 1;
+      opacity: 0.82;
+      vertical-align: middle;
+    }
+    details.pos-picker[open] summary::after {
+      content: "▴";
+    }
+    .pos-picker-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      padding: 0 0.65rem 0.85rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .pos-opt-row {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(15, 22, 30, 0.55);
+      overflow: hidden;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .pos-opt-row.is-on {
+      background: rgba(111, 184, 154, 0.32);
+      border-color: rgba(142, 196, 176, 0.55);
+    }
+    .pos-opt-row.is-on .pos-opt-main {
+      color: #ecfdf5;
+    }
+    button.pos-opt-main {
+      flex: 1;
+      min-width: 0;
+      margin: 0;
+      padding: 0.7rem 0.65rem 0.7rem 0.85rem;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      color: #e2e8f0;
+      font-family: "Saira Semi Condensed", sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      transition: color 0.15s ease, filter 0.15s ease;
+      transform: none;
+      box-shadow: none;
+      text-transform: none;
+      letter-spacing: 0.02em;
+    }
+    button.pos-opt-main:hover {
+      filter: brightness(1.06);
+      transform: none;
+    }
+    button.pos-star-btn {
+      flex-shrink: 0;
+      width: 2.95rem;
+      margin: 0;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      color: #64748b;
+      font-size: 1.38rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.15s ease, background 0.15s ease, filter 0.15s ease;
+      transform: none;
+      box-shadow: none;
+    }
+    button.pos-star-btn:hover {
+      filter: brightness(1.12);
+      color: #94a3b8;
+      transform: none;
+    }
+    button.pos-star-btn.is-star-on {
+      color: #fbbf24;
+      background: transparent;
+      text-shadow: 0 0 10px rgba(251, 191, 36, 0.45);
+    }
+    #pos-client-err {
+      display: none;
+      margin: 0 0 0.65rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-align: center;
+      color: #fecaca;
+    }
+    #pos-client-err.is-visible {
+      display: block;
+    }
+    .err {
+      background: rgba(180, 83, 83, 0.15);
+      border: 1px solid rgba(232, 150, 150, 0.35);
+      color: #fecaca;
+      font-size: 1.02rem;
+      padding: 0.85rem 1rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="lang-fab" id="lang-fab">
+    <button
+      type="button"
+      class="btn-lang"
+      id="lang-btn"
+      aria-haspopup="menu"
+      aria-expanded="false"
+      aria-controls="lang-menu"
+      title="Idioma"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M2 12h20M12 2a15.3 15.3 0 0 1 0 20 15.3 15.3 0 0 1 0-20" />
+        <path d="M4.5 7h15M4.5 17h15" opacity="0.85" />
+      </svg>
+    </button>
+    <div class="lang-menu" id="lang-menu" role="menu">
+      <button type="button" class="lang-menu-item" role="menuitem" data-set-locale="es" id="lang-opt-es">Español</button>
+      <button type="button" class="lang-menu-item" role="menuitem" data-set-locale="en" id="lang-opt-en">English</button>
+      <button type="button" class="lang-menu-item" role="menuitem" data-set-locale="fr" id="lang-opt-fr">Français</button>
+    </div>
+  </div>
+  <div class="wrap">
+    <p>
+      <a
+        class="nav-salir"
+        id="nav-salir"
+        href="{% if volver_a_jugadores|default(false) %}/jugadores{% else %}/{% endif %}"
+        data-nav-mode="{% if volver_a_jugadores|default(false) %}back{% else %}exit{% endif %}"
+      >{% if volver_a_jugadores|default(false) %}Atrás{% else %}Salir{% endif %}</a>
+    </p>
+    <h1 id="i18n-h1" data-h1-mode="{% if edit_id %}edit{% else %}new{% endif %}">{% if edit_id %}Editar jugador{% else %}Completa el formulario{% endif %}</h1>
+
+    <div class="card">
+      {% if error %}
+      <div class="err">{{ error }}</div>
+      {% endif %}
+      <form method="post" action="{% if edit_id %}/jugadores/editar{% else %}/registrar{% endif %}">
+        {% if edit_id %}
+        <input type="hidden" name="jugador_id" value="{{ edit_id }}" />
+        {% endif %}
+        {% if volver_a_jugadores|default(false) %}
+        <input type="hidden" name="desde" value="jugadores" />
+        {% endif %}
+        <label for="nombre" data-i18n="lbl_nombre">Nombre</label>
+        <input id="nombre" name="nombre" required maxlength="100" autocomplete="given-name" value="{{ (jugador.nombre if jugador else '')|e }}" />
+
+        <label for="apellido" data-i18n="lbl_apellido">Apellido</label>
+        <input id="apellido" name="apellido" required maxlength="100" autocomplete="family-name" value="{{ (jugador.apellido if jugador else '')|e }}" />
+
+        <label for="telefono" data-i18n="lbl_tel">Teléfono</label>
+        <input
+          id="telefono"
+          name="telefono"
+          type="tel"
+          maxlength="14"
+          inputmode="tel"
+          autocomplete="tel-national"
+          title="Opcional"
+          value="{{ (jugador.telefono if jugador and jugador.telefono else '')|e }}"
+        />
+
+        <p class="field-label-pos" id="pos-legend" data-i18n="lbl_pos">Posición</p>
+        {% set pc = pos_split(jugador.posicion) if jugador and jugador.posicion else [] %}
+        {% set fav_reg_raw = (jugador.posicion_favorita if jugador and jugador.posicion_favorita else '') or '' %}
+        {% set fav_reg = ('' if not pc else (pc[0] if (not fav_reg_raw or fav_reg_raw not in pc) else fav_reg_raw)) %}
+        <p id="pos-client-err" role="alert"></p>
+        <details class="pos-picker" id="pos-details" aria-labelledby="pos-legend">
+          <summary class="pos-picker-summary" id="pos-summary-reg">Elegir posición…</summary>
+          <div class="pos-picker-panel">
+            <div class="pos-opt-row{% if 'Portero' in pc %} is-on{% endif %}" data-pos="Portero">
+              <button type="button" class="pos-opt-main" data-pos="Portero" data-i18n-pos="portero" aria-pressed="{{ 'true' if 'Portero' in pc else 'false' }}">Portero</button>
+              <button type="button" class="pos-star-btn{% if fav_reg == 'Portero' %} is-star-on{% endif %}" data-pos="Portero" data-i18n-aria-star aria-label="Favorita" aria-pressed="{{ 'true' if fav_reg == 'Portero' else 'false' }}">★</button>
+            </div>
+            <div class="pos-opt-row{% if 'Defensa' in pc %} is-on{% endif %}" data-pos="Defensa">
+              <button type="button" class="pos-opt-main" data-pos="Defensa" data-i18n-pos="defensa" aria-pressed="{{ 'true' if 'Defensa' in pc else 'false' }}">Defensa</button>
+              <button type="button" class="pos-star-btn{% if fav_reg == 'Defensa' %} is-star-on{% endif %}" data-pos="Defensa" data-i18n-aria-star aria-label="Favorita" aria-pressed="{{ 'true' if fav_reg == 'Defensa' else 'false' }}">★</button>
+            </div>
+            <div class="pos-opt-row{% if 'Centrocampista' in pc %} is-on{% endif %}" data-pos="Centrocampista">
+              <button type="button" class="pos-opt-main" data-pos="Centrocampista" data-i18n-pos="medio" aria-pressed="{{ 'true' if 'Centrocampista' in pc else 'false' }}">Mediocampo</button>
+              <button type="button" class="pos-star-btn{% if fav_reg == 'Centrocampista' %} is-star-on{% endif %}" data-pos="Centrocampista" data-i18n-aria-star aria-label="Favorita" aria-pressed="{{ 'true' if fav_reg == 'Centrocampista' else 'false' }}">★</button>
+            </div>
+            <div class="pos-opt-row{% if 'Delantero' in pc %} is-on{% endif %}" data-pos="Delantero">
+              <button type="button" class="pos-opt-main" data-pos="Delantero" data-i18n-pos="delantero" aria-pressed="{{ 'true' if 'Delantero' in pc else 'false' }}">Delantero</button>
+              <button type="button" class="pos-star-btn{% if fav_reg == 'Delantero' %} is-star-on{% endif %}" data-pos="Delantero" data-i18n-aria-star aria-label="Favorita" aria-pressed="{{ 'true' if fav_reg == 'Delantero' else 'false' }}">★</button>
+            </div>
+          </div>
+        </details>
+        <input type="hidden" name="posicion_favorita" id="pos-fav-reg" value="{{ fav_reg|e }}" />
+        <div id="pos-hidden-wrap">
+          {% for p in pc %}
+          <input type="hidden" name="posicion" value="{{ p }}" class="pos-hidden-inp" />
+          {% endfor %}
+        </div>
+
+        <label for="numero_camiseta" data-i18n="lbl_cam">Camiseta (opcional)</label>
+        <select id="numero_camiseta" name="numero_camiseta">
+          <option value="" data-i18n="opt_sin_num">— Sin número —</option>
+        </select>
+
+        <button type="submit" id="btn-submit-reg" data-submit-mode="{% if edit_id %}edit{% else %}new{% endif %}">{% if edit_id %}Guardar cambios{% else %}Enviar formulario{% endif %}</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var STORAGE_KEY = "registrar_locale";
+      var T = {
+        es: {
+          lbl_nombre: "Nombre",
+          lbl_apellido: "Apellido",
+          lbl_tel: "Teléfono",
+          lbl_pos: "Posición",
+          lbl_cam: "Camiseta (opcional)",
+          opt_sin_num: "— Sin número —",
+          nav_back: "Atrás",
+          nav_exit: "Salir",
+          h1_edit: "Editar jugador",
+          h1_new: "Completa el formulario",
+          btn_save: "Guardar cambios",
+          btn_submit: "Enviar formulario",
+          empty_pick: "Elegir posición…",
+          err_submit: "Elige al menos una posición en el menú.",
+          aria_star: "Favorita",
+          lang_btn: "Cambiar idioma",
+          portero: "Portero",
+          defensa: "Defensa",
+          medio: "Mediocampo",
+          delantero: "Delantero",
+        },
+        en: {
+          lbl_nombre: "First name",
+          lbl_apellido: "Last name",
+          lbl_tel: "Phone",
+          lbl_pos: "Position",
+          lbl_cam: "Jersey number (optional)",
+          opt_sin_num: "— No number —",
+          nav_back: "Back",
+          nav_exit: "Exit",
+          h1_edit: "Edit player",
+          h1_new: "Complete the form",
+          btn_save: "Save changes",
+          btn_submit: "Submit form",
+          empty_pick: "Choose position…",
+          err_submit: "Pick at least one position in the menu.",
+          aria_star: "Favorite",
+          lang_btn: "Change language",
+          portero: "Goalkeeper",
+          defensa: "Defense",
+          medio: "Midfielder",
+          delantero: "Forward",
+        },
+        fr: {
+          lbl_nombre: "Prénom",
+          lbl_apellido: "Nom",
+          lbl_tel: "Téléphone",
+          lbl_pos: "Poste",
+          lbl_cam: "Maillot (facultatif)",
+          opt_sin_num: "— Sans numéro —",
+          nav_back: "Retour",
+          nav_exit: "Quitter",
+          h1_edit: "Modifier le joueur",
+          h1_new: "Compléter le formulaire",
+          btn_save: "Enregistrer les modifications",
+          btn_submit: "Envoyer le formulaire",
+          empty_pick: "Choisir un poste…",
+          err_submit: "Choisissez au moins un poste dans le menu.",
+          aria_star: "Préféré",
+          lang_btn: "Changer de langue",
+          portero: "Gardien",
+          defensa: "Défense",
+          medio: "Milieu",
+          delantero: "Attaquant",
+        },
+      };
+      function getLocale() {
+        var v = localStorage.getItem(STORAGE_KEY);
+        if (v === "en" || v === "fr") return v;
+        return "es";
+      }
+      function setLocale(loc) {
+        if (loc === "en" || loc === "fr") localStorage.setItem(STORAGE_KEY, loc);
+        else localStorage.setItem(STORAGE_KEY, "es");
+        applyRegistrarI18n();
+      }
+      function applyRegistrarI18n() {
+        var loc = getLocale();
+        var pack = T[loc] || T.es;
+        document.documentElement.lang = loc === "en" ? "en" : loc === "fr" ? "fr" : "es";
+        window.REGISTRAR_I18N = pack;
+        document.querySelectorAll("[data-i18n]").forEach(function (el) {
+          var k = el.getAttribute("data-i18n");
+          if (k && pack[k] != null) el.textContent = pack[k];
+        });
+        document.querySelectorAll("[data-i18n-pos]").forEach(function (el) {
+          var k = el.getAttribute("data-i18n-pos");
+          if (k && pack[k] != null) el.textContent = pack[k];
+        });
+        document.querySelectorAll("[data-i18n-aria-star]").forEach(function (el) {
+          el.setAttribute("aria-label", pack.aria_star);
+        });
+        var nav = document.getElementById("nav-salir");
+        if (nav) {
+          var mode = nav.getAttribute("data-nav-mode");
+          nav.textContent = mode === "back" ? pack.nav_back : pack.nav_exit;
+        }
+        var h1 = document.getElementById("i18n-h1");
+        if (h1) {
+          var hm = h1.getAttribute("data-h1-mode");
+          h1.textContent = hm === "edit" ? pack.h1_edit : pack.h1_new;
+        }
+        var sub = document.getElementById("btn-submit-reg");
+        if (sub) {
+          var sm = sub.getAttribute("data-submit-mode");
+          sub.textContent = sm === "edit" ? pack.btn_save : pack.btn_submit;
+        }
+        var langBtn = document.getElementById("lang-btn");
+        if (langBtn) {
+          langBtn.setAttribute("title", pack.lang_btn);
+          langBtn.setAttribute("aria-label", pack.lang_btn);
+        }
+        var esOpt = document.getElementById("lang-opt-es");
+        var enOpt = document.getElementById("lang-opt-en");
+        var frOpt = document.getElementById("lang-opt-fr");
+        if (esOpt) esOpt.classList.toggle("is-active", loc === "es");
+        if (enOpt) enOpt.classList.toggle("is-active", loc === "en");
+        if (frOpt) frOpt.classList.toggle("is-active", loc === "fr");
+        var selOpt = document.querySelector("#numero_camiseta option[value='']");
+        if (selOpt && selOpt.getAttribute("data-i18n") === "opt_sin_num") selOpt.textContent = pack.opt_sin_num;
+        if (typeof window.__registrarRefreshSummary === "function") {
+          window.__registrarRefreshSummary();
+        } else {
+          var sumEarly = document.getElementById("pos-summary-reg");
+          var hwEarly = document.getElementById("pos-hidden-wrap");
+          if (sumEarly && hwEarly && hwEarly.querySelectorAll("input.pos-hidden-inp").length === 0) {
+            sumEarly.textContent = pack.empty_pick;
+          }
+        }
+        if (typeof window.__registrarRebuildCamiseta === "function") {
+          window.__registrarRebuildCamiseta();
+        }
+      }
+      window.setRegistrarLocale = setLocale;
+      window.getRegistrarLocale = getLocale;
+      var fab = document.getElementById("lang-fab");
+      var langBtn = document.getElementById("lang-btn");
+      function closeLangMenu() {
+        if (!fab || !langBtn) return;
+        fab.classList.remove("is-open");
+        langBtn.setAttribute("aria-expanded", "false");
+      }
+      function openLangMenu() {
+        if (!fab || !langBtn) return;
+        fab.classList.add("is-open");
+        langBtn.setAttribute("aria-expanded", "true");
+      }
+      if (langBtn && fab) {
+        langBtn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          if (fab.classList.contains("is-open")) closeLangMenu();
+          else openLangMenu();
+        });
+        document.addEventListener("click", function () {
+          closeLangMenu();
+        });
+        fab.addEventListener("click", function (e) {
+          e.stopPropagation();
+        });
+      }
+      document.querySelectorAll("[data-set-locale]").forEach(function (b) {
+        b.addEventListener("click", function (e) {
+          e.stopPropagation();
+          var loc = b.getAttribute("data-set-locale");
+          if (loc === "en") setLocale("en");
+          else if (loc === "fr") setLocale("fr");
+          else setLocale("es");
+          closeLangMenu();
+        });
+      });
+      applyRegistrarI18n();
+    })();
+  </script>
+  <script>
+    (function () {
+      var el = document.getElementById("telefono");
+      if (!el) return;
+      function digitsFrom(v) {
+        var d = (v || "").replace(/\D/g, "");
+        if (d.length === 11 && d.charAt(0) === "1") d = d.slice(1);
+        return d.slice(0, 10);
+      }
+      function formatUS(d) {
+        if (!d) return "";
+        if (d.length <= 3) return "(" + d;
+        if (d.length <= 6) return "(" + d.slice(0, 3) + ") " + d.slice(3);
+        return "(" + d.slice(0, 3) + ") " + d.slice(3, 6) + "-" + d.slice(6, 10);
+      }
+      function apply() {
+        el.value = formatUS(digitsFrom(el.value));
+      }
+      el.addEventListener("input", apply);
+      el.addEventListener("blur", apply);
+      apply();
+    })();
+    (function () {
+      var detailsEl = document.getElementById("pos-details");
+      var summaryEl = document.getElementById("pos-summary-reg");
+      var hiddenWrap = document.getElementById("pos-hidden-wrap");
+      var cam = document.getElementById("numero_camiseta");
+      var form = document.querySelector(".card form");
+      var posClientErr = document.getElementById("pos-client-err");
+      var favInput = document.getElementById("pos-fav-reg");
+      if (!detailsEl || !summaryEl || !hiddenWrap || !cam) return;
+      var inicialCam = {{ (jugador.numero_camiseta|string if jugador and jugador.numero_camiseta is not none else '')|tojson }};
+      function opcion(v, t) {
+        var o = document.createElement("option");
+        o.value = v;
+        o.textContent = t;
+        if (v === "") {
+          o.setAttribute("data-i18n", "opt_sin_num");
+          if (window.REGISTRAR_I18N && window.REGISTRAR_I18N.opt_sin_num) {
+            o.textContent = window.REGISTRAR_I18N.opt_sin_num;
+          }
+        }
+        return o;
+      }
+      function posicionesMarcadas() {
+        return Array.prototype.map.call(hiddenWrap.querySelectorAll("input.pos-hidden-inp"), function (inp) {
+          return inp.value;
+        });
+      }
+      function syncHiddensFromList(vals) {
+        hiddenWrap.innerHTML = "";
+        vals.forEach(function (v) {
+          var hi = document.createElement("input");
+          hi.type = "hidden";
+          hi.name = "posicion";
+          hi.value = v;
+          hi.className = "pos-hidden-inp";
+          hiddenWrap.appendChild(hi);
+        });
+      }
+      function getFavorita() {
+        return favInput ? (favInput.value || "").trim() : "";
+      }
+      function setFavorita(v) {
+        if (favInput) favInput.value = v || "";
+        syncStarButtons();
+      }
+      function syncStarButtons() {
+        var fav = getFavorita();
+        detailsEl.querySelectorAll(".pos-star-btn").forEach(function (b) {
+          var pv = b.getAttribute("data-pos");
+          var on = fav === pv;
+          b.classList.toggle("is-star-on", on);
+          b.setAttribute("aria-pressed", on ? "true" : "false");
+        });
+      }
+      function syncRowOnStates() {
+        var sel = posicionesMarcadas();
+        detailsEl.querySelectorAll(".pos-opt-row").forEach(function (row) {
+          var pv = row.getAttribute("data-pos");
+          var on = sel.indexOf(pv) >= 0;
+          row.classList.toggle("is-on", on);
+          var main = row.querySelector(".pos-opt-main");
+          if (main) main.setAttribute("aria-pressed", on ? "true" : "false");
+        });
+      }
+      function syncPosUi() {
+        syncRowOnStates();
+        syncStarButtons();
+      }
+      function refreshSummary() {
+        var sel = posicionesMarcadas();
+        var loc = (window.getRegistrarLocale && window.getRegistrarLocale()) || "es";
+        var labels =
+          loc === "en"
+            ? { Portero: "GK", Defensa: "DEF", Centrocampista: "MID", Delantero: "FWD" }
+            : loc === "fr"
+              ? { Portero: "GB", Defensa: "DEF", Centrocampista: "MIL", Delantero: "ATT" }
+              : { Portero: "PO", Defensa: "DF", Centrocampista: "MD", Delantero: "DL" };
+        var emptyPick =
+          (window.REGISTRAR_I18N && window.REGISTRAR_I18N.empty_pick) || "Elegir posición…";
+        if (sel.length === 0) {
+          summaryEl.textContent = emptyPick;
+          return;
+        }
+        summaryEl.textContent = sel
+          .map(function (x) {
+            return labels[x] || x;
+          })
+          .join(" · ");
+      }
+      window.__registrarRefreshSummary = refreshSummary;
+      function togglePosReg(v) {
+        var sel = posicionesMarcadas();
+        var i = sel.indexOf(v);
+        if (i >= 0) sel.splice(i, 1);
+        else sel.push(v);
+        syncHiddensFromList(sel);
+        if (sel.length === 0) {
+          setFavorita("");
+        } else {
+          var fav = getFavorita();
+          if (!fav || sel.indexOf(fav) < 0) {
+            setFavorita(sel[0]);
+          }
+        }
+        syncPosUi();
+        refreshSummary();
+        if (posClientErr) {
+          posClientErr.textContent = "";
+          posClientErr.classList.remove("is-visible");
+        }
+        rebuildCamiseta();
+      }
+      function numerosCamisetaPermitidos() {
+        var nums = [];
+        for (var n = 1; n <= 11; n++) nums.push(n);
+        return nums;
+      }
+      function rebuildCamiseta() {
+        var prev = cam.value;
+        cam.innerHTML = "";
+        cam.appendChild(opcion("", "— Sin número —"));
+        var nums = numerosCamisetaPermitidos();
+        for (var i = 0; i < nums.length; i++) {
+          var k = String(nums[i]);
+          cam.appendChild(opcion(k, k));
+        }
+        var ok = false;
+        for (var j = 0; j < cam.options.length; j++) {
+          if (cam.options[j].value === prev) {
+            ok = true;
+            break;
+          }
+        }
+        cam.value = ok ? prev : "";
+      }
+      window.__registrarRebuildCamiseta = rebuildCamiseta;
+      detailsEl.querySelectorAll(".pos-opt-main").forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          var v = btn.getAttribute("data-pos");
+          if (v) togglePosReg(v);
+        });
+      });
+      detailsEl.querySelectorAll(".pos-star-btn").forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          var v = btn.getAttribute("data-pos");
+          if (!v) return;
+          var sel = posicionesMarcadas();
+          if (getFavorita() === v) {
+            if (sel.length <= 1) {
+              syncPosUi();
+              refreshSummary();
+              return;
+            }
+            var others = sel.filter(function (x) {
+              return x !== v;
+            });
+            setFavorita(others[0]);
+          } else {
+            if (sel.indexOf(v) < 0) togglePosReg(v);
+            setFavorita(v);
+          }
+          syncPosUi();
+          refreshSummary();
+        });
+      });
+      document.addEventListener("click", function (e) {
+        if (!detailsEl.open) return;
+        if (!detailsEl.contains(e.target)) detailsEl.open = false;
+      });
+      if (form && posClientErr) {
+        form.addEventListener("submit", function (e) {
+          if (hiddenWrap.querySelectorAll("input.pos-hidden-inp").length === 0) {
+            e.preventDefault();
+            posClientErr.textContent =
+              (window.REGISTRAR_I18N && window.REGISTRAR_I18N.err_submit) ||
+              "Elige al menos una posición en el menú.";
+            posClientErr.classList.add("is-visible");
+          }
+        });
+      }
+      refreshSummary();
+      syncPosUi();
+      rebuildCamiseta();
+      if (inicialCam) {
+        var okIni = false;
+        for (var j = 0; j < cam.options.length; j++) {
+          if (cam.options[j].value === inicialCam) {
+            okIni = true;
+            break;
+          }
+        }
+        if (okIni) cam.value = inicialCam;
+      }
+    })();
+  </script>
+</body>
+</html>
