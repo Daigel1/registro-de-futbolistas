@@ -99,7 +99,7 @@ def _ensure_contacto_guardado_en_column() -> None:
             )
             conn.execute(
                 text(
-                    "UPDATE jugadores SET contacto_guardado_en = datetime('now') "
+                    "UPDATE jugadores SET contacto_guardado_en = CURRENT_TIMESTAMP "
                     "WHERE contacto_guardado_en IS NULL"
                 )
             )
