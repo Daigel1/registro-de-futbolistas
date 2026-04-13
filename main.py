@@ -323,7 +323,7 @@ def portada():
 @app.get("/admin/", include_in_schema=False)
 def admin_alias_listado():
     """Compatibilidad: /admin redirige al listado (sin login)."""
-    return RedirectResponse(url="/jugadores", status_code=303)
+    return RedirectResponse(url="/jugadores/lista", status_code=303)
 
 
 def _ctx_listado_jugadores(db: Session) -> dict:
@@ -342,6 +342,14 @@ def _ctx_listado_jugadores(db: Session) -> dict:
 
 
 @app.get("/jugadores", response_class=HTMLResponse)
+def portal_jugadores(request: Request):
+    return templates.TemplateResponse(
+        "jugadores_portal.html",
+        {"request": request},
+    )
+
+
+@app.get("/jugadores/lista", response_class=HTMLResponse)
 def listar_jugadores(request: Request, db: Session = Depends(get_db)):
     ctx = _ctx_listado_jugadores(db)
     ctx["request"] = request
@@ -369,7 +377,7 @@ def guardar_contactos_pendientes(db: Session = Depends(get_db)):
         append_registro_contacto(row.nombre, row.apellido, row.telefono)
         row.contacto_guardado_en = ahora
     db.commit()
-    return RedirectResponse(url="/jugadores", status_code=303)
+    return RedirectResponse(url="/jugadores/lista", status_code=303)
 
 
 @app.post("/jugadores/marcar-tel-copiado")
@@ -396,7 +404,7 @@ def eliminar_jugador(
     if row is not None:
         db.delete(row)
         db.commit()
-    return RedirectResponse(url="/jugadores", status_code=303)
+    return RedirectResponse(url="/jugadores/lista", status_code=303)
 
 
 @app.post("/jugadores/editar", response_class=HTMLResponse)
@@ -445,7 +453,7 @@ def actualizar_jugador(
     row.posicion_favorita = fav
     row.numero_camiseta = num
     db.commit()
-    return RedirectResponse(url="/jugadores", status_code=303)
+    return RedirectResponse(url="/jugadores/lista", status_code=303)
 
 
 def _volver_lista(desde: str | None) -> bool:
@@ -518,5 +526,13 @@ def crear_jugador(
     )
     db.add(jugador)
     db.commit()
-    next_url = "/jugadores" if volver else "/registrar?enviado=1"
+    next_url = "/jugadores/lista" if volver else "/registrar?enviado=1"
     return RedirectResponse(url=next_url, status_code=303)
+
+
+@app.get("/partidos/organizar", response_class=HTMLResponse)
+def organizar_partido(request: Request):
+    return templates.TemplateResponse(
+        "organizar_partido.html",
+        {"request": request},
+    )
