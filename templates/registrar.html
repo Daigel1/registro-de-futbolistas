@@ -390,16 +390,25 @@
       font-weight: 600;
       text-align: center;
     }
-    .ok {
-      background: rgba(34, 197, 94, 0.16);
-      border: 1px solid rgba(74, 222, 128, 0.38);
-      color: #bbf7d0;
-      font-size: 1.02rem;
-      padding: 0.85rem 1rem;
-      border-radius: 10px;
-      margin-bottom: 1rem;
-      font-weight: 600;
+    .ok-inline {
+      margin: 0 0 0.45rem;
       text-align: center;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: #86efac;
+      letter-spacing: 0.01em;
+      text-shadow: 0 0 10px rgba(34, 197, 94, 0.22);
+      animation: okFadeIn 340ms ease-out;
+    }
+    @keyframes okFadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-5px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
@@ -427,12 +436,12 @@
     </div>
   </div>
   <div class="wrap">
+    {% if enviado_ok %}
+    <p class="ok-inline">Formulario enviado</p>
+    {% endif %}
     <h1 id="i18n-h1" data-h1-mode="{% if edit_id %}edit{% else %}new{% endif %}">{% if edit_id %}Editar jugador{% else %}Completa el formulario{% endif %}</h1>
 
     <div class="card">
-      {% if enviado_ok %}
-      <div class="ok">Formulario enviado</div>
-      {% endif %}
       {% if error %}
       <div class="err">{{ error }}</div>
       {% endif %}
