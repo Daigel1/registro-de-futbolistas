@@ -8,16 +8,16 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       min-height: 100vh;
-      padding: 1rem;
+      padding: 0.95rem;
       font-family: "Segoe UI", Roboto, system-ui, sans-serif;
       background:
-        radial-gradient(ellipse 120% 70% at 20% 0%, rgba(34, 211, 238, 0.12), transparent 55%),
-        radial-gradient(ellipse 120% 70% at 90% 100%, rgba(59, 130, 246, 0.12), transparent 55%),
-        linear-gradient(160deg, #060b17 0%, #0d1526 42%, #080f1d 100%);
+        radial-gradient(ellipse 120% 70% at 18% -8%, rgba(16, 185, 129, 0.13), transparent 55%),
+        radial-gradient(ellipse 120% 70% at 88% 108%, rgba(59, 130, 246, 0.12), transparent 55%),
+        linear-gradient(165deg, #040b16 0%, #0a1222 45%, #070e1b 100%);
       color: #e5e7eb;
     }
     .wrap {
-      width: min(98vw, 78rem);
+      width: min(98vw, 83rem);
       margin: 0 auto;
     }
     .nav {
@@ -35,14 +35,15 @@
     }
     .title {
       text-align: center;
-      margin-bottom: 0.9rem;
+      margin-bottom: 0.75rem;
     }
     .title h1 {
       font-size: clamp(1.2rem, 3.5vw, 1.85rem);
-      letter-spacing: 0.02em;
+      letter-spacing: 0.03em;
       color: #f8fafc;
       text-transform: uppercase;
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.16rem;
+      text-shadow: 0 0 24px rgba(16, 185, 129, 0.16);
     }
     .title p {
       color: #93a4bf;
@@ -52,7 +53,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 0.7rem;
-      margin-bottom: 0.9rem;
+      margin-bottom: 0.75rem;
     }
     .hud-card {
       border-radius: 0.75rem;
@@ -74,6 +75,12 @@
       font-size: 0.8rem;
       color: #94a3b8;
       font-weight: 600;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(18rem, 0.9fr) minmax(22rem, 1.1fr);
+      gap: 0.8rem;
+      align-items: start;
     }
     .panel {
       border-radius: 0.95rem;
@@ -140,6 +147,24 @@
     .num-vacio {
       color: #64748b;
     }
+    .left-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.65rem 0.72rem 0.5rem;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+      background: rgba(15, 23, 42, 0.7);
+    }
+    .left-head strong {
+      font-size: 0.84rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: #bfdbfe;
+    }
+    .left-head span {
+      font-size: 0.74rem;
+      color: #93a4bf;
+    }
     .team-seg {
       display: inline-flex;
       border: 1px solid rgba(148, 163, 184, 0.25);
@@ -167,30 +192,170 @@
     .team-seg button[data-team="B"].is-on {
       background: rgba(59, 130, 246, 0.28);
     }
-    .badge-role {
-      font-size: 0.66rem;
+    .boards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.72rem;
+    }
+    .team-board {
+      border-radius: 0.95rem;
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      background: rgba(2, 6, 23, 0.54);
+      padding: 0.6rem;
+      box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.06);
+    }
+    .team-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.45rem;
+    }
+    .team-top h2 {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #f8fafc;
+    }
+    .team-top .meta {
+      font-size: 0.7rem;
+      color: #94a3b8;
+      font-weight: 600;
+    }
+    .pitch {
+      position: relative;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(74, 222, 128, 0.28);
+      background:
+        linear-gradient(180deg, rgba(22, 163, 74, 0.22), rgba(21, 128, 61, 0.22)),
+        repeating-linear-gradient(
+          0deg,
+          rgba(34, 197, 94, 0.1) 0px,
+          rgba(34, 197, 94, 0.1) 20px,
+          rgba(22, 163, 74, 0.08) 20px,
+          rgba(22, 163, 74, 0.08) 40px
+        );
+      padding: 0.5rem 0.45rem;
+      overflow: hidden;
+      min-height: 23.5rem;
+    }
+    .pitch::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, transparent 49.5%, rgba(226, 232, 240, 0.35) 50%, transparent 50.5%),
+        radial-gradient(circle at 50% 50%, rgba(226, 232, 240, 0.38) 0 1px, transparent 2px);
+      opacity: 0.55;
+    }
+    .zone {
+      position: relative;
+      z-index: 1;
+      margin: 0.22rem 0;
+      padding: 0.22rem 0.1rem;
+      border-radius: 0.55rem;
+      background: rgba(15, 23, 42, 0.18);
+    }
+    .zone-label {
+      text-align: center;
+      font-size: 0.62rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.03em;
-      color: #cbd5e1;
-      border: 1px solid rgba(148, 163, 184, 0.28);
-      border-radius: 999px;
-      padding: 0.17rem 0.38rem;
-      background: rgba(15, 23, 42, 0.8);
-      cursor: pointer;
-      user-select: none;
-      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+      letter-spacing: 0.06em;
+      color: #e2e8f0;
+      opacity: 0.9;
+      margin-bottom: 0.18rem;
     }
-    .badge-role.is-titular {
-      color: #111827;
-      border-color: rgba(250, 204, 21, 0.58);
-      background: rgba(250, 204, 21, 0.88);
+    .slots {
+      display: flex;
+      justify-content: center;
+      gap: 0.22rem;
+      flex-wrap: wrap;
+    }
+    .slot {
+      min-width: 3.35rem;
+      max-width: 5.35rem;
+      min-height: 2.05rem;
+      padding: 0.22rem 0.3rem;
+      border-radius: 0.48rem;
+      border: 1px dashed rgba(203, 213, 225, 0.42);
+      background: rgba(15, 23, 42, 0.56);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.05rem;
+    }
+    .slot .n {
+      font-size: 0.62rem;
+      line-height: 1.15;
+      color: #f8fafc;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .slot .k {
+      font-size: 0.6rem;
+      color: #cbd5e1;
+      font-variant-numeric: tabular-nums;
+    }
+    .slot.is-empty .n {
+      color: #94a3b8;
+      font-weight: 500;
+    }
+    .missing-box {
+      margin-top: 0.42rem;
+      border-top: 1px solid rgba(148, 163, 184, 0.24);
+      padding-top: 0.4rem;
+      min-height: 2rem;
+    }
+    .missing-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.28rem;
+      align-items: center;
+    }
+    .missing-pill {
+      font-size: 0.64rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      border-radius: 999px;
+      padding: 0.17rem 0.42rem;
+      border: 1px solid rgba(248, 113, 113, 0.5);
+      background: rgba(127, 29, 29, 0.38);
+      color: #fecaca;
+      text-transform: uppercase;
+    }
+    .ok-pill {
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      border-radius: 999px;
+      padding: 0.18rem 0.44rem;
+      border: 1px solid rgba(74, 222, 128, 0.55);
+      background: rgba(22, 101, 52, 0.42);
+      color: #bbf7d0;
+      text-transform: uppercase;
+    }
+    .extras {
+      margin-top: 0.3rem;
+      font-size: 0.66rem;
+      color: #c7d2fe;
+      line-height: 1.35;
+      min-height: 0.9rem;
     }
     .empty {
       padding: 1.1rem;
       text-align: center;
       color: #94a3b8;
       font-size: 0.9rem;
+    }
+    @media (max-width: 1080px) {
+      .layout { grid-template-columns: 1fr; }
+      .boards { grid-template-columns: 1fr; }
+      .pitch { min-height: 18rem; }
     }
   </style>
 </head>
@@ -202,19 +367,24 @@
     </div>
     <div class="title">
       <h1>Organizar partido</h1>
-      <p>Estilo FIFA: marca equipo y rol de cada jugador para armar la alineación.</p>
+      <p>Estilo FIFA 26: asigna jugadores a cada equipo y revisa posiciones faltantes automáticamente.</p>
     </div>
     <div class="hud">
       <div class="hud-card">
         <strong>Equipo A</strong>
-        <span><span id="a-tit">0</span> titulares · <span id="a-total">0</span> en plantilla</span>
+        <span><span id="a-total">0</span> asignados</span>
       </div>
       <div class="hud-card">
         <strong>Equipo B</strong>
-        <span><span id="b-tit">0</span> titulares · <span id="b-total">0</span> en plantilla</span>
+        <span><span id="b-total">0</span> asignados</span>
       </div>
     </div>
-    <div class="panel">
+    <div class="layout">
+      <div class="panel">
+        <div class="left-head">
+          <strong>Convocatoria</strong>
+          <span>Selecciona A o B</span>
+        </div>
       {% if jugadores %}
       <table aria-label="Listado de jugadores para organizar partido">
         <thead>
@@ -222,14 +392,13 @@
             <th style="width: 32%">Jugador</th>
             <th style="width: 16%">Posición</th>
             <th style="width: 14%">Dorsal pref.</th>
-            <th style="width: 22%">Equipo</th>
-            <th style="width: 16%">Rol</th>
+            <th style="width: 38%">Equipo</th>
           </tr>
         </thead>
         <tbody>
           {% for j in jugadores %}
           {% set pos = posicion_principal(j.posicion, j.posicion_favorita) %}
-          <tr class="row-player" data-player-id="{{ j.id }}">
+          <tr class="row-player" data-player-id="{{ j.id }}" data-pos="{{ pos }}">
             <td class="col-nombre">{{ titulo_palabras(j.nombre) }} {{ titulo_palabras(j.apellido) }}</td>
             <td>
               <span class="pill-pos">
@@ -250,9 +419,6 @@
                 <button type="button" data-team="B">B</button>
               </div>
             </td>
-            <td>
-              <button type="button" class="badge-role" data-role="sup">Suplente</button>
-            </td>
           </tr>
           {% endfor %}
         </tbody>
@@ -260,29 +426,191 @@
       {% else %}
       <div class="empty">No hay jugadores registrados todavía. Añade algunos desde el formulario.</div>
       {% endif %}
+      </div>
+
+      <div class="boards">
+        <section class="team-board" data-team-board="A">
+          <div class="team-top">
+            <h2>Equipo A</h2>
+            <span class="meta">Formación base 1-4-3-3</span>
+          </div>
+          <div class="pitch">
+            <div class="zone">
+              <div class="zone-label">Portero</div>
+              <div class="slots">
+                <div class="slot is-empty" data-team="A" data-pos="Portero" data-slot="1"><span class="n">Libre</span><span class="k">PO</span></div>
+              </div>
+            </div>
+            <div class="zone">
+              <div class="zone-label">Defensa</div>
+              <div class="slots">
+                <div class="slot is-empty" data-team="A" data-pos="Defensa" data-slot="1"><span class="n">Libre</span><span class="k">DF</span></div>
+                <div class="slot is-empty" data-team="A" data-pos="Defensa" data-slot="2"><span class="n">Libre</span><span class="k">DF</span></div>
+                <div class="slot is-empty" data-team="A" data-pos="Defensa" data-slot="3"><span class="n">Libre</span><span class="k">DF</span></div>
+                <div class="slot is-empty" data-team="A" data-pos="Defensa" data-slot="4"><span class="n">Libre</span><span class="k">DF</span></div>
+              </div>
+            </div>
+            <div class="zone">
+              <div class="zone-label">Centrocampo</div>
+              <div class="slots">
+                <div class="slot is-empty" data-team="A" data-pos="Centrocampista" data-slot="1"><span class="n">Libre</span><span class="k">MD</span></div>
+                <div class="slot is-empty" data-team="A" data-pos="Centrocampista" data-slot="2"><span class="n">Libre</span><span class="k">MD</span></div>
+                <div class="slot is-empty" data-team="A" data-pos="Centrocampista" data-slot="3"><span class="n">Libre</span><span class="k">MD</span></div>
+              </div>
+            </div>
+            <div class="zone">
+              <div class="zone-label">Delantera</div>
+              <div class="slots">
+                <div class="slot is-empty" data-team="A" data-pos="Delantero" data-slot="1"><span class="n">Libre</span><span class="k">DL</span></div>
+                <div class="slot is-empty" data-team="A" data-pos="Delantero" data-slot="2"><span class="n">Libre</span><span class="k">DL</span></div>
+                <div class="slot is-empty" data-team="A" data-pos="Delantero" data-slot="3"><span class="n">Libre</span><span class="k">DL</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="missing-box">
+            <div class="missing-row" id="missing-A"></div>
+            <div class="extras" id="extras-A"></div>
+          </div>
+        </section>
+
+        <section class="team-board" data-team-board="B">
+          <div class="team-top">
+            <h2>Equipo B</h2>
+            <span class="meta">Formación base 1-4-3-3</span>
+          </div>
+          <div class="pitch">
+            <div class="zone">
+              <div class="zone-label">Portero</div>
+              <div class="slots">
+                <div class="slot is-empty" data-team="B" data-pos="Portero" data-slot="1"><span class="n">Libre</span><span class="k">PO</span></div>
+              </div>
+            </div>
+            <div class="zone">
+              <div class="zone-label">Defensa</div>
+              <div class="slots">
+                <div class="slot is-empty" data-team="B" data-pos="Defensa" data-slot="1"><span class="n">Libre</span><span class="k">DF</span></div>
+                <div class="slot is-empty" data-team="B" data-pos="Defensa" data-slot="2"><span class="n">Libre</span><span class="k">DF</span></div>
+                <div class="slot is-empty" data-team="B" data-pos="Defensa" data-slot="3"><span class="n">Libre</span><span class="k">DF</span></div>
+                <div class="slot is-empty" data-team="B" data-pos="Defensa" data-slot="4"><span class="n">Libre</span><span class="k">DF</span></div>
+              </div>
+            </div>
+            <div class="zone">
+              <div class="zone-label">Centrocampo</div>
+              <div class="slots">
+                <div class="slot is-empty" data-team="B" data-pos="Centrocampista" data-slot="1"><span class="n">Libre</span><span class="k">MD</span></div>
+                <div class="slot is-empty" data-team="B" data-pos="Centrocampista" data-slot="2"><span class="n">Libre</span><span class="k">MD</span></div>
+                <div class="slot is-empty" data-team="B" data-pos="Centrocampista" data-slot="3"><span class="n">Libre</span><span class="k">MD</span></div>
+              </div>
+            </div>
+            <div class="zone">
+              <div class="zone-label">Delantera</div>
+              <div class="slots">
+                <div class="slot is-empty" data-team="B" data-pos="Delantero" data-slot="1"><span class="n">Libre</span><span class="k">DL</span></div>
+                <div class="slot is-empty" data-team="B" data-pos="Delantero" data-slot="2"><span class="n">Libre</span><span class="k">DL</span></div>
+                <div class="slot is-empty" data-team="B" data-pos="Delantero" data-slot="3"><span class="n">Libre</span><span class="k">DL</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="missing-box">
+            <div class="missing-row" id="missing-B"></div>
+            <div class="extras" id="extras-B"></div>
+          </div>
+        </section>
+      </div>
     </div>
   </div>
   {% if jugadores %}
   <script>
     (function () {
+      var FORMACION = { Portero: 1, Defensa: 4, Centrocampista: 3, Delantero: 3 };
+      var POS_SHORT = { Portero: "PO", Defensa: "DF", Centrocampista: "MD", Delantero: "DL" };
+
       function refreshHud() {
         var aTotal = document.querySelectorAll("tr.row-player[data-team='A']").length;
         var bTotal = document.querySelectorAll("tr.row-player[data-team='B']").length;
-        var aTit = document.querySelectorAll("tr.row-player[data-team='A'][data-role='tit']").length;
-        var bTit = document.querySelectorAll("tr.row-player[data-team='B'][data-role='tit']").length;
         var aTotEl = document.getElementById("a-total");
         var bTotEl = document.getElementById("b-total");
-        var aTitEl = document.getElementById("a-tit");
-        var bTitEl = document.getElementById("b-tit");
         if (aTotEl) aTotEl.textContent = String(aTotal);
         if (bTotEl) bTotEl.textContent = String(bTotal);
-        if (aTitEl) aTitEl.textContent = String(aTit);
-        if (bTitEl) bTitEl.textContent = String(bTit);
+      }
+
+      function playersByTeamPos(team, pos) {
+        var out = [];
+        document.querySelectorAll("tr.row-player[data-team='" + team + "'][data-pos='" + pos + "']").forEach(function (tr) {
+          var nameEl = tr.querySelector(".col-nombre");
+          var numEl = tr.querySelector(".num-pref");
+          out.push({
+            nombre: nameEl ? nameEl.textContent.trim() : "Jugador",
+            dorsal: numEl ? numEl.textContent.trim() : "",
+          });
+        });
+        return out;
+      }
+
+      function renderTeamBoard(team) {
+        Object.keys(FORMACION).forEach(function (pos) {
+          var req = FORMACION[pos];
+          var list = playersByTeamPos(team, pos);
+          var slots = document.querySelectorAll(".slot[data-team='" + team + "'][data-pos='" + pos + "']");
+          slots.forEach(function (slot, idx) {
+            var n = slot.querySelector(".n");
+            var k = slot.querySelector(".k");
+            var item = list[idx];
+            if (item) {
+              slot.classList.remove("is-empty");
+              if (n) n.textContent = item.nombre;
+              if (k) k.textContent = item.dorsal ? "#" + item.dorsal : POS_SHORT[pos];
+            } else {
+              slot.classList.add("is-empty");
+              if (n) n.textContent = "Libre";
+              if (k) k.textContent = POS_SHORT[pos];
+            }
+          });
+        });
+
+        var miss = document.getElementById("missing-" + team);
+        var extras = document.getElementById("extras-" + team);
+        if (!miss || !extras) return;
+        miss.innerHTML = "";
+        extras.textContent = "";
+
+        var totalMissing = 0;
+        var extrasTxt = [];
+        Object.keys(FORMACION).forEach(function (pos) {
+          var req = FORMACION[pos];
+          var have = playersByTeamPos(team, pos).length;
+          if (have < req) {
+            var faltan = req - have;
+            totalMissing += faltan;
+            var pill = document.createElement("span");
+            pill.className = "missing-pill";
+            pill.textContent = "Faltan " + faltan + " " + POS_SHORT[pos];
+            miss.appendChild(pill);
+          } else if (have > req) {
+            extrasTxt.push("+" + (have - req) + " extra en " + POS_SHORT[pos]);
+          }
+        });
+
+        if (totalMissing === 0) {
+          var ok = document.createElement("span");
+          ok.className = "ok-pill";
+          ok.textContent = "Alineación completa";
+          miss.appendChild(ok);
+        }
+
+        if (extrasTxt.length) {
+          extras.textContent = "Extras: " + extrasTxt.join(" · ");
+        }
+      }
+
+      function refreshAll() {
+        refreshHud();
+        renderTeamBoard("A");
+        renderTeamBoard("B");
       }
 
       document.querySelectorAll("tr.row-player").forEach(function (tr) {
         tr.setAttribute("data-team", "");
-        tr.setAttribute("data-role", "sup");
       });
 
       document.addEventListener("click", function (e) {
@@ -292,38 +620,15 @@
           if (!tr) return;
           var team = teamBtn.getAttribute("data-team") || "";
           tr.setAttribute("data-team", team);
-          if (!team) {
-            tr.setAttribute("data-role", "sup");
-            var roleBtn = tr.querySelector(".badge-role");
-            if (roleBtn) {
-              roleBtn.classList.remove("is-titular");
-              roleBtn.textContent = "Suplente";
-              roleBtn.setAttribute("data-role", "sup");
-            }
-          }
           tr.querySelectorAll(".team-seg button").forEach(function (b) {
             b.classList.toggle("is-on", b === teamBtn);
           });
-          refreshHud();
+          refreshAll();
           return;
-        }
-
-        var roleBtn = e.target.closest(".badge-role");
-        if (roleBtn) {
-          var tr2 = roleBtn.closest("tr.row-player");
-          if (!tr2) return;
-          var teamNow = tr2.getAttribute("data-team") || "";
-          if (!teamNow) return;
-          var nowTit = tr2.getAttribute("data-role") === "tit";
-          tr2.setAttribute("data-role", nowTit ? "sup" : "tit");
-          roleBtn.classList.toggle("is-titular", !nowTit);
-          roleBtn.textContent = nowTit ? "Suplente" : "Titular";
-          roleBtn.setAttribute("data-role", nowTit ? "sup" : "tit");
-          refreshHud();
         }
       });
 
-      refreshHud();
+      refreshAll();
     })();
   </script>
   {% endif %}
