@@ -193,9 +193,35 @@
       background: rgba(59, 130, 246, 0.28);
     }
     .boards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.72rem;
+      display: block;
+    }
+    .team-switch {
+      display: inline-flex;
+      border: 1px solid rgba(148, 163, 184, 0.32);
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.82);
+      margin-bottom: 0.58rem;
+      overflow: hidden;
+    }
+    .team-switch button {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: #94a3b8;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.62rem;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .team-switch button.is-on {
+      color: #f8fafc;
+      background: rgba(16, 185, 129, 0.3);
+    }
+    .team-switch button[data-manage="B"].is-on {
+      background: rgba(59, 130, 246, 0.3);
     }
     .team-board {
       border-radius: 0.95rem;
@@ -203,6 +229,10 @@
       background: rgba(2, 6, 23, 0.54);
       padding: 0.6rem;
       box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.06);
+      display: none;
+    }
+    .team-board.is-active {
+      display: block;
     }
     .team-top {
       display: flex;
@@ -354,7 +384,6 @@
     }
     @media (max-width: 1080px) {
       .layout { grid-template-columns: 1fr; }
-      .boards { grid-template-columns: 1fr; }
       .pitch { min-height: 18rem; }
     }
   </style>
@@ -429,7 +458,11 @@
       </div>
 
       <div class="boards">
-        <section class="team-board" data-team-board="A">
+        <div class="team-switch" role="tablist" aria-label="Gestionar equipo">
+          <button type="button" class="is-on" data-manage="A" role="tab" aria-selected="true">Gestionar equipo 1</button>
+          <button type="button" data-manage="B" role="tab" aria-selected="false">Gestionar equipo 2</button>
+        </div>
+        <section class="team-board is-active" data-team-board="A">
           <div class="team-top">
             <h2>Equipo A</h2>
             <span class="meta">Formación base 1-4-3-3</span>
@@ -609,11 +642,27 @@
         renderTeamBoard("B");
       }
 
+      function setManageTeam(team) {
+        document.querySelectorAll(".team-switch button").forEach(function (btn) {
+          var on = btn.getAttribute("data-manage") === team;
+          btn.classList.toggle("is-on", on);
+          btn.setAttribute("aria-selected", on ? "true" : "false");
+        });
+        document.querySelectorAll(".team-board").forEach(function (panel) {
+          panel.classList.toggle("is-active", panel.getAttribute("data-team-board") === team);
+        });
+      }
+
       document.querySelectorAll("tr.row-player").forEach(function (tr) {
         tr.setAttribute("data-team", "");
       });
 
       document.addEventListener("click", function (e) {
+        var manageBtn = e.target.closest(".team-switch button");
+        if (manageBtn) {
+          setManageTeam(manageBtn.getAttribute("data-manage") || "A");
+          return;
+        }
         var teamBtn = e.target.closest(".team-seg button");
         if (teamBtn) {
           var tr = teamBtn.closest("tr.row-player");
@@ -629,6 +678,7 @@
       });
 
       refreshAll();
+      setManageTeam("A");
     })();
   </script>
   {% endif %}
