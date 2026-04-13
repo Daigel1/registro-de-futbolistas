@@ -399,6 +399,11 @@
       letter-spacing: 0.01em;
       text-shadow: 0 0 10px rgba(34, 197, 94, 0.22);
       animation: okFadeIn 340ms ease-out;
+      transition: opacity 0.36s ease, transform 0.36s ease;
+    }
+    .ok-inline.is-hide {
+      opacity: 0;
+      transform: translateY(-4px);
     }
     @keyframes okFadeIn {
       0% {
@@ -908,6 +913,16 @@
           }
         }
         if (okIni) cam.value = inicialCam;
+      }
+
+      var okMsg = document.querySelector(".ok-inline");
+      if (okMsg) {
+        setTimeout(function () {
+          okMsg.classList.add("is-hide");
+          setTimeout(function () {
+            if (okMsg && okMsg.parentNode) okMsg.parentNode.removeChild(okMsg);
+          }, 380);
+        }, 2600);
       }
     })();
   </script>
