@@ -390,6 +390,17 @@
       font-weight: 600;
       text-align: center;
     }
+    .ok {
+      background: rgba(34, 197, 94, 0.16);
+      border: 1px solid rgba(74, 222, 128, 0.38);
+      color: #bbf7d0;
+      font-size: 1.02rem;
+      padding: 0.85rem 1rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -419,6 +430,9 @@
     <h1 id="i18n-h1" data-h1-mode="{% if edit_id %}edit{% else %}new{% endif %}">{% if edit_id %}Editar jugador{% else %}Completa el formulario{% endif %}</h1>
 
     <div class="card">
+      {% if enviado_ok %}
+      <div class="ok">Formulario enviado</div>
+      {% endif %}
       {% if error %}
       <div class="err">{{ error }}</div>
       {% endif %}

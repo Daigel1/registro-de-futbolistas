@@ -453,12 +453,17 @@ def _volver_lista(desde: str | None) -> bool:
 
 
 @app.get("/registrar", response_class=HTMLResponse)
-def formulario_registro(request: Request, desde: str | None = None):
+def formulario_registro(
+    request: Request,
+    desde: str | None = None,
+    enviado: int = 0,
+):
     return templates.TemplateResponse(
         "registrar.html",
         {
             "request": request,
             "error": None,
+            "enviado_ok": enviado == 1,
             "edit_id": None,
             "jugador": None,
             "volver_a_jugadores": _volver_lista(desde),
@@ -488,6 +493,7 @@ def crear_jugador(
             {
                 "request": request,
                 "error": error,
+                "enviado_ok": False,
                 "edit_id": None,
                 "jugador": _prefill_form(
                     nombre,
@@ -512,5 +518,5 @@ def crear_jugador(
     )
     db.add(jugador)
     db.commit()
-    next_url = "/jugadores" if volver else "/registrar"
+    next_url = "/jugadores" if volver else "/registrar?enviado=1"
     return RedirectResponse(url=next_url, status_code=303)
